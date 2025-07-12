@@ -43,7 +43,7 @@ ptr = malloc(ret_val->num_bytes);
 ```
 This check ensures that `num_bytes` has a value between 0 and 2,147,483,647 before calling `malloc()`.
 
-## Tools Used
+## Tools and Artifacts Used
 - `giftcardwriter.c` (used to generate crafted `.gft`files)
 - `giftcardreader.c` (target application used for testing)
 - VS Code debugger (to trace execution and observe the crash)
