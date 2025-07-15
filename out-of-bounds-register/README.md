@@ -5,7 +5,7 @@ This section covers an out-of-bounds register vulnerability in `giftcardreader.c
 
 To exploit this vulnerability, I modified the gift card generator to create a `.gft` file that followed the expected format but caused the application to access an invalid register index, triggering a segmentation fault.
 
-**Note:** The original source files (`giftcardreader.c` and `giftcardwriter.c`) were provided as part of the course and are not included in this repository.
+**Note:** The original source files were provided as part of the course and are not included in this repository.
 
 ## Affected Component
 The vulnerability exists in the `animate()` function, which is the interpreter that executes a custom instruction set. Within the function, the handler for opcode `0x01` does not validate the register index and writes directly to `regs[arg1]`.
@@ -34,7 +34,7 @@ unsigned char program[256] = {
 };
 fwrite(program, 256, 1, fd1);
 ```
-The crafted gift card file was then loaded into the `giftcardreader` application. Because there was no bounds check,the out-of-bounds register value led to an invalid memory write.
+The crafted gift card file was then loaded into the gift card reader application. Because there was no bounds check, the out-of-bounds register value led to an invalid memory write.
 
 ## Impact
 Exploiting this vulnerability caused the application to crash with a segmentation fault. Because the interpreter didn't validate the register index, it led to an out-of-bounds write, which could be potentially be exploited further in a real-world context.
@@ -51,7 +51,7 @@ switch (*pc) {
 ```
 
 ## Tools and Artifacts Used
-- `giftcardwriter.c` (used to generate crafted `.gft`files)
+- `giftcardwriter.c` (used to generate crafted `.gft` files)
 - `giftcardreader.c` (target application used for testing)
 - VS Code debugger (to trace execution and observe the crash)
 - Manual source code review

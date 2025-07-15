@@ -5,7 +5,7 @@ This section covers an infinite loop vulnerability in `giftcardreader.c`, a cust
 
 To exploit this vulnerability, I modified the gift card generator to create a `.gft` file that followed the expected format but caused the application to repeatedly decrement the iterator, resulting in an infinite loop.
 
-**Note:** The original source files (`giftcardreader.c` and `giftcardwriter.c`) were provided as part of the course and are not included in this repository.
+**Note:** The original source files were provided as part of the course and are not included in this repository.
 
 ## Affected Component
 The vulnerability exists in the `animate()` function, which is the interpreter that executes a custom instruction set. Within the function, the handler for opcode `0x09` does not check that `arg1` is positive, so a negative value causes the iterator to keep getting decremented, leaving it stuck in an infinite loop.
@@ -36,10 +36,10 @@ unsigned char program[256] = {
 };
 fwrite(program, 256, 1, fd1);
 ```
-The crafted gift card file was then loaded into the `giftcardreader` application. Because there was no check for `arg1` being positive, the negative value of `0xee` caused the pointer to move backwards repeatedly. This prevented the loop termination condition from being met, which caused the application to hang indefinitely.
+The crafted gift card file was then loaded into the gift card reader application. Because there was no check for `arg1` being positive, the negative value of `0xee` caused the pointer to move backwards repeatedly. This prevented the loop termination condition from being met, which caused the application to hang indefinitely.
 
 ## Impact
-Exploiting this vulnerability caused the application to enter an infinite loop, rendering it unresponsive. In a real world context, this could be further exploited to perform a denial-of-service (DoS) attack.
+Exploiting this vulnerability caused the application to enter an infinite loop, rendering it unresponsive. In a real-world context, this could be further exploited to perform a denial-of-service (DoS) attack.
 
 ## Mitigation
 To mitigate the issue, I added a check to make sure that `arg1` only gets added to `pc` if it is a positive value. This prevents the iterator from continuously getting decremented if `arg1` is negative, thus preventing an infinite loop.
@@ -55,7 +55,7 @@ switch (*pc) {
 ```
 
 ## Tools and Artifacts Used
-- `giftcardwriter.c` (used to generate crafted `.gft`files)
+- `giftcardwriter.c` (used to generate crafted `.gft` files)
 - `giftcardreader.c` (target application used for testing)
 - VS Code debugger (to trace execution and observe the crash)
 - Manual source code review

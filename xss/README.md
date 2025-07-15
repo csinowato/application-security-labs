@@ -1,7 +1,7 @@
 # Cross-Site Scripting (XSS)
 
 ## Summary
-This section covers a reflected cross-site scripting (XSS) vulnerability in a web-based version of the gift card application, implemented using Django. Unlike some of the other vulnerabilities, which targeted the original C-based implementation (`giftcardreader.c`), this issue arises within the Python-based web interface and its HTML components.
+This section covers a reflected cross-site scripting (XSS) vulnerability in a web-based version of the gift card application implemented using Django. Unlike some of the other vulnerabilities, which targeted the original C-based implementation, this issue arises within the Python-based web interface and its HTML components.
 
 To exploit this vulnerability, I injected a `<script>` tag into a URL parameter, which was reflected by the application without sanitization.
 

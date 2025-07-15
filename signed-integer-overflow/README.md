@@ -5,7 +5,7 @@ This section covers a signed integer overflow vulnerability in `giftcardreader.c
 
 To exploit this vulnerability, I modified the gift card generator to create a `.gft` file that followed the expected format but triggered a flaw in the gift card reader's size handling logic, leading to memory corruption and a crash.
 
-**Note:** The original source files (`giftcardreader.c` and `giftcardwriter.c`) were provided as part of the course and are not included in this repository.
+**Note:** The original source files were provided as part of the course and are not included in this repository.
 
 ## Affected Component
 The vulnerability exists in `giftcardreader.c`, where the program reads a 32-bit signed integer from the `.gft` file and uses it to allocate memory without checking if the value is valid.
@@ -29,7 +29,7 @@ This value exceeds the maximum value for a signed 32-bit integer. It was then wr
 ```
 fwrite(&examplegc.num_bytes, 4, 1, fd1);
 ```
-The crafted gift card file was then loaded into the `giftcardreader` application. Because `num_bytes` was not validated, the out-of-range value led to incorrect memory allocation and a segmentation fault.
+The crafted gift card file was then loaded into the gift card reader application. Because `num_bytes` was not validated, the out-of-range value led to incorrect memory allocation and a segmentation fault.
 
 ## Impact
 Exploiting this vulnerability caused the application to crash with a segmentation fault. Since the input wasn't validated, it led to memory corruption, which could be potentially be exploited further in a real-world context.
@@ -44,7 +44,7 @@ ptr = malloc(ret_val->num_bytes);
 This check ensures that `num_bytes` has a value between 0 and 2,147,483,647 before calling `malloc()`.
 
 ## Tools and Artifacts Used
-- `giftcardwriter.c` (used to generate crafted `.gft`files)
+- `giftcardwriter.c` (used to generate crafted `.gft` files)
 - `giftcardreader.c` (target application used for testing)
 - VS Code debugger (to trace execution and observe the crash)
 - Manual source code review
