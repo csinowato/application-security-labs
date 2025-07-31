@@ -13,6 +13,7 @@ The labs were based on a custom gift card application written in C, with an addi
 - [CSRF](./csrf/)
 - [SQL Injection](./sql-injection/)
 - [Reused Salt](./reused-salt/)
+- [Dictionary Attack](./dictionary-attack/)
 
 ## Summary of Exploits
 Each vulnerability was discovered by analyzing how the application parsed and handled gift card files, then crafting malicious inputs to exploit weaknesses in memory handling, input validation, and application behavior.
